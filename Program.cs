@@ -10,14 +10,19 @@ namespace DrumGame
         {
             string userInput;
             int score = 0;
-            string[] drum = { "00000000#", "0000000#0", "000000#00", "00000#000", "0000#0000", "000#00000", "00#000000", "0#0000000", "#00000000" };
+            string[] drum = { "--------#", "-------#-", "------#--", "-----#---", "----#----", "---#-----", "--#------", "-#-------", "#--------" };
 
 
 
 
             Console.WriteLine("WELCOME TO DRUM GAME 2000\n");
-            Console.WriteLine("PRESS ENTER TO BEGIN");
+            Console.WriteLine("TYPE A LETTER THEN \"ENTER\" TO BEGIN. TYPE \"t\" THEN ENTER FOR INSTRUCTIONS.");
             userInput = Console.ReadLine();
+            Console.WriteLine("PRESS B EVERY TIME THE # AT THE SCREEN BOTTOM IS TO THE LEFT\n LIKE: #--------");
+            if (userInput == "t")
+            {
+                Thread.Sleep(3900);
+            }
             Console.WriteLine("STARTING");
             Console.WriteLine(".........");
             Console.WriteLine(".........");
@@ -43,36 +48,45 @@ namespace DrumGame
             Console.WriteLine(".........");
             Console.WriteLine(".........");
             Console.WriteLine(".........");
-            Console.WriteLine(".........");
-            Thread.Sleep(500);
-
+            Console.WriteLine("IT STARTS FAST!");
+            Thread.Sleep(950);
+            
             for (int arrayLoop = 0; arrayLoop < 20; arrayLoop++)
             {
-                for (int i = 0; i < 9; i++)
+                for (int i = 0; i < 90; i++) //i<90   if i<85 for hard version
                 {
-                    Console.WriteLine(drum[i]);
+                    
+                    Console.WriteLine(drum[i/10]);
 
                     
-                    Thread.Sleep(500);
+                    //Thread.Sleep(100);
 
-
-                    //if ((Keyboard.GetKeyStates(Key.Return) & KeyStates.Down) > 0)
+                    new Thread(() =>
                     {
-                        if (i < 8)
+                        while (true)
                         {
-                            score -= 1;
+                            if (Console.KeyAvailable)
+                            {
+                                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                                //if (i < 8)
+                                {
+                                    //score -= 1;
+                                }
+                                if (i > 85)
+                                {
+                                    score += 1;
+                                }
+                            }
+
                         }
-                        else
-                        {
-                            score++;
-                        }
-                    }
+                    }).Start();
+                    i++;
                 }
             }
             
            
 
-            Console.WriteLine($"GAME OVER. YOUR SCORE IS {score}");
+            Console.WriteLine($"GAME OVER. YOUR SCORE IS {score}/20.\n0-5 = poor \n6-12 = good\n13-17 = great\n18-20 = perfect");
             Thread.Sleep(1900);
             //public static System.Windows.Input.KeyStates GetKeyStates (System.Windows.Input.Key key);
         }
